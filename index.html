@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ReadKeeper</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- LOGIN / REGISTER -->
+<section id="auth" class="auth-container">
+  <div class="auth-card">
+    <h2 id="authTitle">Login</h2>
+
+    <div class="input-group">
+      <input id="username" type="text" required placeholder=" ">
+      <label>Username</label>
+    </div>
+
+    <div class="input-group">
+      <input id="password" type="password" required placeholder=" ">
+      <label>Password</label>
+    </div>
+
+    <div class="input-group">
+      <select id="role">
+        <option value="user">User</option>
+        <option value="admin">Admin</option>
+      </select>
+      <label>Role</label>
+    </div>
+
+    <button id="authBtn">Login</button>
+    <p id="toggle">No account? Register</p>
+  </div>
+</section>
+
+<!-- MAIN APP -->
+<section id="app" class="hidden">
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <h1>📚 ReadKeeper</h1>
+    <div class="nav-actions">
+      <button id="themeBtn">🎨 Theme: <span id="themeName">Blue</span></button>
+      <button id="logout">Logout</button>
+    </div>
+  </nav>
+
+  <main class="container">
+
+    <!-- ADMIN PANEL -->
+    <section id="adminPanel" class="card">
+      <h3>Admin Panel</h3>
+      <div class="grid">
+        <input id="bookTitle" placeholder="Book title">
+        <input id="bookAuthor" placeholder="Author">
+        <select id="bookCategory">
+          <option>Programming</option>
+          <option>Business</option>
+          <option>Science</option>
+          <option>Novel</option>
+        </select>
+        <button id="addBook">Add Book</button>
+      </div>
+
+      <h4>Borrow Requests</h4>
+      <div id="requests"></div>
+    </section>
+
+    <!-- LIBRARY BOOKS -->
+    <section class="card">
+      <h3>Library Books</h3>
+      <input id="search" placeholder="Search books by title or author...">
+      <div id="books" class="grid"></div>
+    </section>
+
+    <!-- USER BORROW STATUS -->
+    <section id="userBorrows" class="card hidden">
+      <h3>Your Borrow Requests</h3>
+      <div id="userRequests" class="grid"></div>
+    </section>
+
+  </main>
+</section>
+
+<script src="script.js"></script>
+</body>
+</html>
