@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReadKeeper - Settings</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body>
+
+<div class="app-container">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="brand">
+        <i data-feather="book-open" style="color:var(--primary)"></i> ReadKeeper
+        </div>
+        
+        <nav class="nav-links">
+        <a href="index.html" class="nav-item">
+            <i data-feather="grid"></i> Dashboard
+        </a>
+        <a href="library.html" class="nav-item">
+            <i data-feather="list"></i> My Books
+        </a>
+        <a href="members.html" class="nav-item">
+            <i data-feather="users"></i> Members
+        </a>
+        <a href="#" class="nav-item active">
+            <i data-feather="settings"></i> Settings
+        </a>
+        </nav>
+    
+        <div class="user-profile">
+            <div class="avatar"><i data-feather="user"></i></div>
+            <div style="flex:1">
+                <div style="font-size:0.9rem; font-weight:600;" id="welcomeSettings">User</div>
+                <div style="font-size:0.75rem; color:#94a3b8;">Logged in</div>
+            </div>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="flex-between mb-4">
+            <div>
+                <h1 style="font-size:1.5rem; font-weight:800; text-transform:uppercase; letter-spacing:0.05em;">Settings</h1>
+                <p style="color:var(--text-muted); font-size:0.85rem;">Profile & Preferences</p>
+            </div>
+            <div style="display:flex; gap:10px; align-items:center;">
+                <button id="logoutBtn" class="btn btn-danger btn-sm">
+                    <i data-feather="log-out"></i> Logout
+                </button>
+            </div>
+        </header>
+
+        <div style="max-width: 800px;">
+            <!-- PROFILE SETTINGS -->
+            <section class="card mb-4">
+                <div class="card-header">
+                    <h3 style="font-size:1.1rem; font-weight:600;">Profile Settings</h3>
+                </div>
+                <div style="padding:1.5rem;">
+                    <form id="profileForm">
+                        <div class="form-group">
+                            <label class="form-label">Username</label>
+                            <input type="text" id="settingsUsername" class="form-control" disabled style="background:var(--bg-body); cursor:not-allowed;">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">New Password</label>
+                            <input type="password" id="newPassword" class="form-control" placeholder="Leave empty to keep current">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update Profile</button>
+                    </form>
+                </div>
+            </section>
+
+             <!-- APP SETTINGS -->
+             <section class="card mb-4">
+                <div class="card-header">
+                    <h3 style="font-size:1.1rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em;">Preferences</h3>
+                </div>
+                <div style="padding:1.5rem;">
+                     <p style="color:var(--text-muted); font-size:0.85rem;">The application is currently locked to a strictly professional minimalist theme.</p>
+                </div>
+            </section>
+
+            <!-- DANGER ZONE (Admin Only) -->
+            <section id="dangerZone" class="card mb-4" style="border-color:var(--danger);">
+                <div class="card-header" style="background:#fee2e2; border-bottom-color:var(--danger);">
+                    <h3 style="font-size:1.1rem; font-weight:600; color:var(--danger);">Danger Zone</h3>
+                </div>
+                <div style="padding:1.5rem;">
+                    <p style="margin-bottom:1rem; color:var(--text-muted);">Resetting the application will delete ALL books, requests, and users (except Admin).</p>
+                    <button id="resetAppBtn" class="btn btn-danger">Reset Application Data</button>
+                </div>
+            </section>
+        </div>
+
+    </main>
+</div>
+
+<script src="script.js"></script>
+<script>
+    feather.replace();
+    
+    // Page specific init
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    if(currentUser){
+         document.getElementById('welcomeSettings').textContent = currentUser.username;
+         document.getElementById('settingsUsername').value = currentUser.username;
+         
+         if(currentUser.role !== 'admin'){
+             document.getElementById('dangerZone').style.display = 'none';
+         }
+    }
+
+    // Pass global theme setter if needed, though script.js usually handles this.
+    // We'll rely on script.js 'applyTheme' global function if exposed, or simple logic here.
+    function setTheme(index){
+        // Assuming applyTheme is globally available from script.js
+        if(window.applyTheme) window.applyTheme(index);
+    }
+    
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+        localStorage.removeItem('currentUser');
+        window.location.href = 'index.html';
+    });
+</script>
+</body>
+</html>

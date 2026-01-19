@@ -2,51 +2,50 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
-    /* Color Palette - Modern Blue Theme */
-    --primary: #4f46e5;       /* Indigo 600 */
-    --primary-hover: #4338ca; /* Indigo 700 */
-    --primary-light: #e0e7ff; /* Indigo 100 */
+    /* STRICT TWO-COLOR PALETTE (with neutrals) */
+    --primary: #000000;       /* Primary Action Color */
+    --primary-hover: #333333;
+    --primary-light: #f3f4f6; /* Neutral for soft backgrounds */
     
-    --secondary: #64748b;     /* Slate 500 */
-    --success: #10b981;       /* Emerald 500 */
-    --danger: #ef4444;        /* Red 500 */
-    --warning: #f59e0b;       /* Amber 500 */
+    --secondary: #6b7280;     /* Neutral for secondary text */
+    --success: #000000;       /* Unified to primary for minimalism */
+    --danger: #000000;        /* Unified to primary for minimalism */
+    --warning: #000000;       /* Unified to primary for minimalism */
     
-    --bg-body: #f8fafc;       /* Slate 50 */
+    --bg-body: #ffffff;
     --bg-surface: #ffffff;
-    --bg-sidebar: #1e293b;    /* Slate 800 */
+    --bg-sidebar: #000000;
     
-    --text-main: #0f172a;     /* Slate 900 */
-    --text-muted: #64748b;    /* Slate 500 */
+    --text-main: #000000;
+    --text-muted: #6b7280;
     --text-invert: #ffffff;
     
-    --border: #e2e8f0;        /* Slate 200 */
+    --border: #e5e7eb;
     
-    /* Shadows */
-    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    /* Shadows - Refined for Minimalism */
+    --shadow-sm: 0 1px 0px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 0 0 1px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.05);
     
     /* Typography */
     --font-sans: 'Inter', sans-serif;
     
     /* Transitions */
-    --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition: all 0.15s ease;
 }
 
-/* THEMES */
-body.blue { --primary: #2563eb; --primary-hover: #1e40af; --primary-light: #eff6ff; }
-body.green { --primary: #059669; --primary-hover: #047857; --primary-light: #ecfdf5; }
-body.purple { --primary: #7c3aed; --primary-hover: #6d28d9; --primary-light: #f5f3ff; }
+/* THEMES REMOVED - SINGLE MONOCHROME LOOK */
+body { --primary: #000000; } 
 
-/* THEME: Dark Mode Support (Class-based) */
+/* DARK MODE OVERRIDES (Optional, keeping it strictly to the two-color request usually implies one core palette, but I'll make it clean) */
 body.dark {
-    --bg-body: #0f172a;
-    --bg-surface: #1e293b;
-    --bg-sidebar: #020617;
-    --text-main: #f8fafc;
-    --text-muted: #94a3b8;
-    --border: #334155;
+    --bg-body: #0a0a0a;
+    --bg-surface: #111111;
+    --bg-sidebar: #000000;
+    --text-main: #ffffff;
+    --text-muted: #a1a1aa;
+    --border: #27272a;
+    --primary-light: #1f2937;
 }
 
 /* RESET & BASE */
@@ -340,16 +339,19 @@ td {
 tr:last-child td { border-bottom: none; }
 tr:hover td { background-color: var(--bg-body); }
 
-/* BADGES */
+/* BADGES - Minimalist */
 .badge {
     padding: 0.25rem 0.75rem;
-    border-radius: 9999px;
-    font-size: 0.75rem;
-    font-weight: 500;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border: 1px solid var(--primary);
 }
-.badge-success { background: #dcfce7; color: #166534; }
-.badge-warning { background: #fef3c7; color: #92400e; }
-.badge-danger { background: #fee2e2; color: #991b1b; }
+.badge-success { background: var(--primary); color: var(--text-invert); }
+.badge-warning { background: transparent; color: var(--primary); }
+.badge-danger { background: transparent; color: var(--text-muted); border-color: var(--border); }
 
 /* UTILITIES */
 .hidden { display: none !important; }
@@ -359,16 +361,15 @@ tr:hover td { background-color: var(--bg-body); }
 .flex-between { display: flex; justify-content: space-between; align-items: center; }
 
 /* SCROLLBAR */
-::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+::-webkit-scrollbar-thumb { background: #000000; border-radius: 0px; }
 
 /* SCRIPT.JS COMPATIBILITY STYLES */
 .book {
     background: var(--bg-surface);
     border: 1px solid var(--border);
-    border-radius: 0.75rem;
+    border-radius: 0px; /* Sharp corners for minimalist look */
     padding: 1.5rem;
     transition: var(--transition);
     display: flex;
@@ -378,31 +379,33 @@ tr:hover td { background-color: var(--bg-body); }
 }
 
 .book:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-    border-color: var(--primary-light);
+    border-color: var(--primary);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
 }
 
-.book b { font-size: 1.1rem; font-weight: 600; color: var(--text-main); display:block; margin-bottom:0.25rem;}
-.book { color: var(--text-muted); font-size: 0.9rem; }
+.book b { font-size: 1rem; font-weight: 800; color: var(--text-main); display:block; margin-bottom:0.25rem; text-transform: uppercase; letter-spacing: 0.02em;}
+.book { color: var(--text-muted); font-size: 0.85rem; }
 
 .book button {
     margin-top: 1rem;
     width: 100%;
-    padding: 0.5rem;
-    border: none;
-    border-radius: 0.5rem;
+    padding: 0.75rem;
+    border: 1px solid var(--primary);
+    border-radius: 0px;
     cursor: pointer;
-    font-weight: 500;
-    transition: 0.2s;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.75rem;
     background: var(--primary);
-    color: white;
+    color: var(--text-invert);
+    transition: var(--transition);
 }
-.book button:hover { opacity: 0.9; transform:scale(1.02); }
-.book button.delete { background: var(--bg-body); color: var(--danger); border:1px solid var(--danger); margin-top:0.5rem; }
-.book button.delete:hover { background: var(--danger); color: white; }
+.book button:hover { background: transparent; color: var(--primary); }
+.book button.delete { background: transparent; color: var(--primary); border: 1px solid var(--border); }
+.book button.delete:hover { border-color: var(--primary); }
 
-/* Status Badges */
-.pending { background: #fef3c7; color: #92400e; padding:2px 8px; border-radius:12px; font-size:0.75rem; font-weight:600; text-transform:uppercase; }
-.approved { background: #dcfce7; color: #166534; padding:2px 8px; border-radius:12px; font-size:0.75rem; font-weight:600; text-transform:uppercase; }
-.rejected { background: #fee2e2; color: #991b1b; padding:2px 8px; border-radius:12px; font-size:0.75rem; font-weight:600; text-transform:uppercase; }
+/* Status Badges in JS */
+.pending { background: transparent; color: var(--primary); border: 1px solid var(--primary); padding:2px 8px; border-radius:2px; font-size:0.65rem; font-weight:800; text-transform:uppercase; }
+.approved { background: var(--primary); color: var(--text-invert); padding:2px 8px; border-radius:2px; font-size:0.65rem; font-weight:800; text-transform:uppercase; }
+.rejected { background: transparent; color: var(--text-muted); border: 1px solid var(--border); padding:2px 8px; border-radius:2px; font-size:0.65rem; font-weight:800; text-transform:uppercase; }

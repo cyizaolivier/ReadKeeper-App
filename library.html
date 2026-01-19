@@ -24,10 +24,10 @@
           <a href="#" class="nav-item active">
             <i data-feather="list"></i> My Books
           </a>
-          <a href="#" class="nav-item">
+          <a href="members.html" class="nav-item">
             <i data-feather="users"></i> Members
           </a>
-          <a href="#" class="nav-item">
+          <a href="settings.html" class="nav-item">
             <i data-feather="settings"></i> Settings
           </a>
         </nav>
@@ -38,7 +38,6 @@
               <div style="font-size:0.9rem; font-weight:600;" id="welcomeMsg">Welcome</div>
               <div style="font-size:0.75rem; color:#94a3b8;">Active now</div>
           </div>
-          <button id="logoutBtn" style="background:none; border:none; color:white; cursor:pointer;" title="Logout"><i data-feather="log-out"></i></button>
         </div>
       </aside>
 
@@ -46,12 +45,14 @@
         <!-- HEADER -->
         <header class="flex-between mb-4">
             <div>
-                <h1 style="font-size:1.5rem; font-weight:700;">My Collection</h1>
-                <p style="color:var(--text-muted)">Manage your personal library</p>
+                <h1 style="font-size:1.5rem; font-weight:800; text-transform:uppercase; letter-spacing:0.05em;">My Collection</h1>
+                <p style="color:var(--text-muted); font-size:0.85rem;">Personal Library</p>
             </div>
-            <button id="themeToggle" class="btn btn-secondary btn-sm">
-                <i data-feather="moon"></i> Toggle Theme
-            </button>
+            <div style="display:flex; gap:10px; align-items:center;">
+                <button id="logoutBtnTop" class="btn btn-danger btn-sm">
+                    <i data-feather="log-out"></i> Logout
+                </button>
+            </div>
         </header>
 
         <!-- ADD SEARCH -->

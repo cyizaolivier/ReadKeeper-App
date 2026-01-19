@@ -66,11 +66,10 @@
       <a href="library.html" class="nav-item">
         <i data-feather="list"></i> My Books
       </a>
-      <!-- Placeholder links for "Full Management" feel -->
-      <a href="#" class="nav-item">
+      <a href="members.html" class="nav-item">
         <i data-feather="users"></i> Members
       </a>
-      <a href="#" class="nav-item">
+      <a href="settings.html" class="nav-item">
         <i data-feather="settings"></i> Settings
       </a>
     </nav>
@@ -81,7 +80,6 @@
           <div style="font-size:0.9rem; font-weight:600;" id="userDisplay">User</div>
           <div style="font-size:0.75rem; color:#94a3b8;">Logged in</div>
       </div>
-      <button id="logout" style="background:none; border:none; color:white; cursor:pointer;"><i data-feather="log-out"></i></button>
     </div>
   </aside>
 
@@ -91,12 +89,14 @@
     <!-- HEADER -->
     <header class="flex-between mb-4">
         <div>
-            <h1 style="font-size:1.5rem; font-weight:700;">Dashboard</h1>
-            <p style="color:var(--text-muted)">Overview of library activities</p>
+            <h1 style="font-size:1.5rem; font-weight:800; text-transform:uppercase; letter-spacing:0.05em;">Dashboard</h1>
+            <p style="color:var(--text-muted); font-size:0.85rem;">Library Management System</p>
         </div>
-        <button id="themeBtn" class="btn btn-secondary btn-sm">
-            <i data-feather="moon"></i> <span id="themeName">Dark Mode</span>
-        </button>
+        <div style="display:flex; gap:10px; align-items:center;">
+             <button id="logout" class="btn btn-danger btn-sm">
+                <i data-feather="log-out"></i> Logout
+             </button>
+        </div>
     </header>
 
     <!-- ADMIN PANEL -->

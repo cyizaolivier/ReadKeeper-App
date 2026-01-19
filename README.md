@@ -1,99 +1,89 @@
-# 📚 ReadKeeper – Library Management System
+# 📚 ReadKeeper: Minimalist Library Management
 
-## Overview
-**ReadKeeper** is a modern, web-based **Library Management System** built using **HTML, CSS, and JavaScript**.  
-
-It allows **users** to browse books, submit borrow requests, and track their approval status. **Admins** can manage books, approve or reject borrow requests, and monitor user activity.  
-
-The project features a **professional UI with animations, theme switching, and responsive design**.
+**ReadKeeper** is a high-end, minimalist Library Management System designed with a strictly two-color monochrome aesthetic. Built for speed, clarity, and professional-grade utility, it provides a seamless experience for both administrators and library members.
 
 ---
 
-## Features
-
-### User Features
-- **Login/Register** with role selection (User/Admin)  
-- **Browse Books** with search and filter  
-- **Borrow Requests** – request books and track approval status  
-- **Theme Switching** – choose between **Blue, Green, and Purple** themes  
-
-### Admin Features
-- **Add Books** – add new books to the library  
-- **Delete Books** – remove books  
-- **Approve/Reject Requests** – manage borrow requests  
-- **View Borrow Requests** – see all user requests  
-
-### UI/UX Features
-- **Animated login/register forms** with floating labels  
-- **Card animations** for books and borrow requests  
-- **Responsive layout** for desktops and tablets  
-- **Professional portfolio-style design**  
+## 🎨 Design Philosophy: Brutalist Minimalism
+The application follows a "Senior Developer" design standard:
+- **Strict Monochrome**: A high-contrast palette of Midnight Black (`#000000`) and Pure White (`#ffffff`).
+- **Typography**: Optimized with the **Inter** typeface for maximum legibility.
+- **Precision Layout**: Zero-radius corners, bold brutalist borders, and consistent spacing for a premium SaaS feel.
 
 ---
 
-## Technology Stack
-- **HTML5** – Semantic structure  
-- **CSS3** – Animations, responsive design, theme support  
-- **JavaScript** – DOM manipulation, localStorage for data persistence  
+## 🚀 Core Modules
+
+### 1. Unified Dashboard
+A central hub for real-time monitoring.
+- **Admin**: Monitor borrow requests, manage the global book repository, and track library health.
+- **User**: Quick overview of recent borrowings and personal library status.
+
+### 2. My Collection (Personal Library)
+Dual-pane interface for managing personal bibliographies.
+- **Live Search**: Integrated instant filtering across title, author, and category.
+- **CRUD Operations**: Complete management of book records with a refined table view.
+
+### 3. Member Directory (Admin Only)
+A protected module for user governance.
+- **User Management**: View all registered users with distinctive role badges.
+- **Access Control**: Ability to remove users and audit library membership.
+
+### 4. Smart Settings & Preferences
+Profile and application-level controls.
+- **Security**: Manage and update personal authentication credentials.
+- **Danger Zone**: Admin-only feature to reset application databases (books/borrows).
+- **Persistent States**: Locked minimalist theme ensures consistent professional branding.
 
 ---
 
-## Installation & Usage
-
-1. **Clone the repository**  
-```bash
-git clone https://github.com/cyizaolivier/readkeeper.git
-````
-
-2. **Navigate to the project folder**
-
-```bash
-cd readkeeper
-```
-
-3. **Run the app**
-   Open `index.html` in a web browser (Chrome/Edge/Firefox recommended).
-
-### Default Admin Account
-
-* **Username:** `admin`
-* **Password:** `admin123`
+## 🛠️ Technology Stack
+- **Structure**: Semantic HTML5
+- **Aesthetics**: Vanilla CSS3 (Custom Design System, Variable-driven)
+- **Engine**: Vanilla JavaScript (ES6+)
+- **Icons**: [Feather Icons](https://feathericons.com/)
+- **Typography**: [Google Fonts - Inter](https://fonts.google.com/specimen/Inter)
+- **Persistance**: `localStorage` (Browser-based DB)
 
 ---
 
-## How to Use
+## 📦 Installation & Setup
 
-1. **Login or Register**
+1. **Clone the Project**
+   ```bash
+   git clone https://github.com/cyizaolivier/readkeeper.git
+   ```
 
-   * Users register as “User” role
-   * Admin logs in with default credentials
+2. **Launch Application**
+   Simply open `index.html` in any modern web browser. No server environment or build step is required.
 
-2. **Library Operations**
-
-   * Users browse and request books
-   * Admin adds/deletes books and manages requests
-
-3. **Theme Switching**
-
-   * Click the **Theme** button in the navbar to cycle through themes
-   * Selection persists across sessions
+### 🔑 Admin Credentials (Default)
+- **Username**: `admin`
+- **Password**: `admin123`
 
 ---
 
-## Project Structure
+## 🔄 Smart Borrowing Workflow
+ReadKeeper features advanced logic for borrowing automation:
+- **Request Cycle**: Members request books directly from the collection.
+- **Approval Engine**: Admins evaluate requests with a single click.
+- **Auto-Returns**: On approval, the system **automatically calculates a 14-day return window** and notifies the user in their dashboard.
 
-```
+---
+
+## 📂 Project Architecture
+```text
 readkeeper/
-├── index.html       # Main HTML file
-├── style.css        # CSS with animations and theme support
-├── script.js        # JavaScript for authentication, books, borrows, and theme
-└── README.md        # Project README
+├── index.html       # Auth & Dual-Role Dashboard
+├── library.html     # Collection Management Module
+├── members.html     # User Directory Module
+├── settings.html    # Profile & Preference Module
+├── style.css        # Minimalist Design System
+└── script.js        # Core Application Engine
 ```
 
 ---
 
 ## Author
-
-**Cyiza Olivier** – Frontend Developer & UI/UX Enthusiast
-
-* GitHub: [https://github.com/cyizaolivier](https://github.com/cyizaolivier)
+**Cyiza Olivier** – *Frontend Architect & UI/UX Specialist*
+- GitHub: [@cyizaolivier](https://github.com/cyizaolivier)

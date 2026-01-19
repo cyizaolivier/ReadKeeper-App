@@ -9,8 +9,6 @@
 
 /* ---------- STATE ---------- */
 let isRegister = false;
-const themes = [{name:"Blue", class:"blue"},{name:"Green", class:"green"},{name:"Purple", class:"purple"}];
-let themeIndex = parseInt(localStorage.getItem("theme")) || 0;
 
 /* ---------- ELEMENTS ---------- */
 const authTitle = document.getElementById("authTitle");
@@ -28,8 +26,6 @@ const userBorrowsSection = document.getElementById("userBorrows");
 const userRequestsBox = document.getElementById("userRequests");
 
 const searchInput = document.getElementById("search");
-const themeBtn = document.getElementById("themeBtn");
-const themeNameEl = document.getElementById("themeName");
 
 /* ---------- AUTH TOGGLE ---------- */
 toggle.onclick = () => {
@@ -61,28 +57,20 @@ authBtn.onclick = () => {
 
 /* ---------- LOAD APP ---------- */
 function loadApp(){
-  document.getElementById("auth").remove();
+  if(document.getElementById("auth")) document.getElementById("auth").remove();
   app.classList.remove("hidden");
   const user = JSON.parse(localStorage.getItem("currentUser"));
-  adminPanel.style.display = user.role==="admin"?"block":"none";
-  userBorrowsSection.style.display = user.role==="user"?"block":"none";
+  if(adminPanel) adminPanel.style.display = user.role==="admin"?"block":"none";
+  if(userBorrowsSection) userBorrowsSection.style.display = user.role==="user"?"block":"none";
   renderBooks();
   renderRequests();
   renderUserBorrows();
 }
 
 /* ---------- LOGOUT ---------- */
-document.getElementById("logout").onclick = ()=>{ localStorage.removeItem("currentUser"); location.reload(); };
+const logoutEl = document.getElementById("logout");
+if(logoutEl) logoutEl.onclick = ()=>{ localStorage.removeItem("currentUser"); location.reload(); };
 
-/* ---------- THEME BUTTON ---------- */
-function applyTheme(index){
-  document.body.classList.remove("blue","green","purple");
-  document.body.classList.add(themes[index].class);
-  themeNameEl.innerText = themes[index].name;
-  localStorage.setItem("theme",index);
-}
-themeBtn.addEventListener("click",()=>{ themeIndex=(themeIndex+1)%themes.length; applyTheme(themeIndex); });
-applyTheme(themeIndex);
 
 /* ---------- BOOKS ---------- */
 document.getElementById("addBook")?.addEventListener("click",()=>{
@@ -168,23 +156,139 @@ function renderUserBorrows(){
   userRequestsBox.innerHTML="";
   myBorrows.forEach(b=>{
     const book=books.find(x=>x.id===b.bookId);
+    let statusBadge = `<span class="badge ${b.status}">${b.status}</span>`;
+    let extraInfo = "";
+
+    if(b.status === "approved" && b.returnDate){
+        extraInfo = `<div style="margin-top:0.5rem; font-size:0.85rem; color:var(--text-muted);">
+                        <i data-feather="calendar" style="width:14px;"></i> Return by: <b>${b.returnDate}</b>
+                     </div>`;
+    }
+
     const div=document.createElement("div");
     div.className="book";
     div.innerHTML=`
-      <b>${book?.title}</b><br>${book?.author}<br>Status: <span class="badge ${b.status}">${b.status}</span>
+      <b>${book?.title}</b><br>${book?.author}<br>
+      <div style="margin-top:0.5rem;">Status: ${statusBadge}</div>
+      ${extraInfo}
     `;
     userRequestsBox.appendChild(div);
   });
+  if(window.feather) feather.replace();
 }
 
 /* ---------- UPDATE BORROW STATUS ADMIN ---------- */
 function updateBorrow(id,status){
   let borrows=JSON.parse(localStorage.getItem("borrows"))||[];
-  borrows=borrows.map(b=>b.id===id?{...b,status}:b);
+  
+  borrows=borrows.map(b=>{
+    if(b.id===id){
+        let updated = {...b, status};
+        if(status === 'approved'){
+            // Set return date to 14 days from now
+            const date = new Date();
+            date.setDate(date.getDate() + 14);
+            updated.returnDate = date.toLocaleDateString();
+        }
+        return updated;
+    }
+    return b;
+  });
+
   localStorage.setItem("borrows",JSON.stringify(borrows));
   renderRequests();
   renderUserBorrows();
 }
 
-/* ---------- AUTO LOGIN ---------- */
-if(localStorage.getItem("currentUser")) loadApp();
+/* ---------- MEMBERS PAGE LOGIC ---------- */
+function renderMembers(){
+    const membersGrid = document.getElementById('membersGrid');
+    const countEl = document.getElementById('memberCount');
+    if(!membersGrid) return; // Not on members page
+    
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    
+    if(countEl) countEl.innerText = `${users.length} Users`;
+    membersGrid.innerHTML = '';
+    
+    users.forEach(u => {
+        const isMe = u.username === currentUser.username;
+        const isAdmin = u.role === 'admin';
+        
+        const div = document.createElement('div');
+        div.className = 'card';
+        div.style.marginBottom = '0';
+        div.innerHTML = `
+            <div style="padding:1.5rem; display:flex; gap:1rem; align-items:center;">
+                <div style="width:50px; height:50px; background:${isAdmin ? 'var(--primary)' : 'var(--secondary)'}; border-radius:50%; color:white; display:flex; align-items:center; justify-content:center; font-size:1.2rem; font-weight:bold;">
+                    ${u.username.charAt(0).toUpperCase()}
+                </div>
+                <div style="flex:1">
+                    <h4 style="margin:0; font-size:1.1rem;">${u.username}</h4>
+                    <span class="badge ${isAdmin ? 'badge-success' : 'pending'}" style="margin-top:0.25rem; display:inline-block;">${u.role}</span>
+                </div>
+                ${currentUser.role === 'admin' && !isMe ? 
+                  `<button onclick="deleteUser('${u.username}')" class="btn btn-danger btn-sm" title="Remove User"><i data-feather="trash-2"></i></button>` 
+                  : ''}
+            </div>
+        `;
+        membersGrid.appendChild(div);
+    });
+    if(window.feather) feather.replace();
+}
+
+function deleteUser(username){
+    if(!confirm(`Are you sure you want to remove user: ${username}?`)) return;
+    
+    let users = JSON.parse(localStorage.getItem('users')) || [];
+    users = users.filter(u => u.username !== username);
+    localStorage.setItem('users', JSON.stringify(users));
+    
+    renderMembers();
+}
+
+/* ---------- SETTINGS PAGE LOGIC ---------- */
+const profileForm = document.getElementById('profileForm');
+if(profileForm){
+    profileForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const newPass = document.getElementById('newPassword').value;
+        if(!newPass) return alert("Password unchanged");
+        
+        let users = JSON.parse(localStorage.getItem('users')) || [];
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        
+        // Update users array
+        const userIndex = users.findIndex(u => u.username === currentUser.username);
+        if(userIndex > -1){
+            users[userIndex].password = btoa(newPass); // simple update
+            localStorage.setItem('users', JSON.stringify(users));
+            
+            // Update current session
+            currentUser.password = btoa(newPass);
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            
+            alert("Password updated successfully!");
+            document.getElementById('newPassword').value = '';
+        }
+    });
+}
+
+const resetBtn = document.getElementById('resetAppBtn');
+if(resetBtn){
+    resetBtn.addEventListener('click', () => {
+        if(confirm("WARNING: This will delete ALL books and borrow requests. Are you sure?")){
+            localStorage.removeItem('books');
+            localStorage.removeItem('borrows');
+            alert("Application data reset.");
+            window.location.reload();
+        }
+    });
+}
+
+/* ---------- INIT PAGES ---------- */
+if(localStorage.getItem("currentUser")) {
+    if(document.getElementById("auth")) { loadApp(); } // If on index and logged in
+    renderMembers(); // Try rendering members if on members page
+}

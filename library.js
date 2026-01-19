@@ -6,7 +6,7 @@ if(!currentUser){
 const welcomeMsg = document.getElementById('welcomeMsg');
 welcomeMsg.textContent = `Welcome, ${currentUser.username} (${currentUser.role})`;
 
-const logoutBtn = document.getElementById('logoutBtn');
+const logoutBtn = document.getElementById('logoutBtnTop');
 logoutBtn.addEventListener('click', () => {
     localStorage.removeItem('currentUser');
     window.location.href = 'index.html';
