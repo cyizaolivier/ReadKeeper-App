@@ -2,88 +2,252 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>ReadKeeper</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ReadKeeper - Library Manager</title>
   <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- feather icons -->
+  <script src="https://unpkg.com/feather-icons"></script>
 </head>
 <body>
 
 <!-- LOGIN / REGISTER -->
-<section id="auth" class="auth-container">
+<section id="auth" class="auth-wrapper">
   <div class="auth-card">
-    <h2 id="authTitle">Login</h2>
-
-    <div class="input-group">
-      <input id="username" type="text" required placeholder=" ">
-      <label>Username</label>
+    <div class="auth-header">
+      <div style="display:flex; justify-content:center; margin-bottom:1rem;">
+          <div style="width:48px; height:48px; background:var(--primary); border-radius:12px; display:flex; align-items:center; justify-content:center; color:white;">
+            <i data-feather="book-open"></i>
+          </div>
+      </div>
+      <h2 id="authTitle">Welcome Back</h2>
+      <p>Enter your credentials to access the library.</p>
     </div>
 
-    <div class="input-group">
-      <input id="password" type="password" required placeholder=" ">
-      <label>Password</label>
+    <div class="form-group">
+      <label class="form-label">Username</label>
+      <input id="username" type="text" class="form-control" placeholder="john.doe" required>
     </div>
 
-    <div class="input-group">
-      <select id="role">
+    <div class="form-group">
+      <label class="form-label">Password</label>
+      <input id="password" type="password" class="form-control" placeholder="••••••••" required>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Role</label>
+      <select id="role" class="form-control">
         <option value="user">User</option>
         <option value="admin">Admin</option>
       </select>
-      <label>Role</label>
     </div>
 
-    <button id="authBtn">Login</button>
-    <p id="toggle">No account? Register</p>
+    <button id="authBtn" class="btn btn-primary" style="width:100%">Sign In</button>
+    
+    <div style="text-align:center; margin-top:1.5rem;">
+        <p id="toggle" style="color:var(--primary); cursor:pointer; font-size:0.9rem; font-weight:500;">Don't have an account? Create one</p>
+    </div>
   </div>
 </section>
 
 <!-- MAIN APP -->
-<section id="app" class="hidden">
+<section id="app" class="app-container hidden">
 
-  <!-- NAVBAR -->
-  <nav class="navbar">
-    <h1>📚 ReadKeeper</h1>
-    <div class="nav-actions">
-      <button id="themeBtn">🎨 Theme: <span id="themeName">Blue</span></button>
-      <button id="logout">Logout</button>
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="brand">
+      <i data-feather="book-open" style="color:var(--primary)"></i> ReadKeeper
     </div>
-  </nav>
+    
+    <nav class="nav-links">
+      <a href="#" class="nav-item active">
+        <i data-feather="grid"></i> Dashboard
+      </a>
+      <a href="library.html" class="nav-item">
+        <i data-feather="list"></i> My Books
+      </a>
+      <!-- Placeholder links for "Full Management" feel -->
+      <a href="#" class="nav-item">
+        <i data-feather="users"></i> Members
+      </a>
+      <a href="#" class="nav-item">
+        <i data-feather="settings"></i> Settings
+      </a>
+    </nav>
 
-  <main class="container">
+    <div class="user-profile">
+      <div class="avatar"><i data-feather="user"></i></div>
+      <div style="flex:1">
+          <div style="font-size:0.9rem; font-weight:600;" id="userDisplay">User</div>
+          <div style="font-size:0.75rem; color:#94a3b8;">Logged in</div>
+      </div>
+      <button id="logout" style="background:none; border:none; color:white; cursor:pointer;"><i data-feather="log-out"></i></button>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+    
+    <!-- HEADER -->
+    <header class="flex-between mb-4">
+        <div>
+            <h1 style="font-size:1.5rem; font-weight:700;">Dashboard</h1>
+            <p style="color:var(--text-muted)">Overview of library activities</p>
+        </div>
+        <button id="themeBtn" class="btn btn-secondary btn-sm">
+            <i data-feather="moon"></i> <span id="themeName">Dark Mode</span>
+        </button>
+    </header>
 
     <!-- ADMIN PANEL -->
-    <section id="adminPanel" class="card">
-      <h3>Admin Panel</h3>
-      <div class="grid">
-        <input id="bookTitle" placeholder="Book title">
-        <input id="bookAuthor" placeholder="Author">
-        <select id="bookCategory">
-          <option>Programming</option>
-          <option>Business</option>
-          <option>Science</option>
-          <option>Novel</option>
-        </select>
-        <button id="addBook">Add Book</button>
+    <section id="adminPanel" class="card mb-4" style="border-top: 4px solid var(--primary);">
+      <div class="card-header">
+        <h3 style="font-size:1.1rem; font-weight:600;">📚 Book Management</h3>
+      </div>
+      <div style="padding:1.5rem;">
+          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:1rem; align-items:end;">
+            <div class="form-group" style="margin:0">
+                <label class="form-label">Book Title</label>
+                <input id="bookTitle" class="form-control" placeholder="e.g. Clean Code">
+            </div>
+            <div class="form-group" style="margin:0">
+                <label class="form-label">Author</label>
+                <input id="bookAuthor" class="form-control" placeholder="e.g. Robert C. Martin">
+            </div>
+            <div class="form-group" style="margin:0">
+                <label class="form-label">Category</label>
+                <select id="bookCategory" class="form-control">
+                    <option>Programming</option>
+                    <option>Business</option>
+                    <option>Science</option>
+                    <option>Novel</option>
+                </select>
+            </div>
+            <button id="addBook" class="btn btn-primary"><i data-feather="plus"></i> Add Book</button>
+          </div>
       </div>
 
-      <h4>Borrow Requests</h4>
-      <div id="requests"></div>
+      <div style="border-top:1px solid var(--border);">
+          <div class="card-header" style="background:var(--bg-body);">
+              <h4 style="font-size:0.9rem; text-transform:uppercase; letter-spacing:0.05em; color:var(--text-muted);">Borrow Requests</h4>
+          </div>
+          <div id="requests" style="padding:1.5rem;">
+              <!-- Requests injected here -->
+          </div>
+      </div>
     </section>
 
     <!-- LIBRARY BOOKS -->
-    <section class="card">
-      <h3>Library Books</h3>
-      <input id="search" placeholder="Search books by title or author...">
-      <div id="books" class="grid"></div>
+    <section class="card mb-4">
+      <div class="card-header flex-between">
+        <h3 style="font-size:1.1rem; font-weight:600;">Library Collection</h3>
+        <div style="position:relative; width:300px;">
+            <i data-feather="search" style="position:absolute; left:10px; top:10px; color:var(--text-muted); width:16px;"></i>
+            <input id="search" class="form-control" style="padding-left:2.2rem;" placeholder="Search books...">
+        </div>
+      </div>
+      <div style="padding:1.5rem;">
+        <div id="books" class="grid-books">
+            <!-- Books injected here. Note: current script uses grid class, need to update CSS or script if I change structure too much. 
+                 Existing script uses grid -> div.book. 
+                 I'll add .grid-books to CSS or rely on existing .grid? 
+                 The new style.css removed .grid. I will add .grid-books to style.css or Inline it.
+                 For now let's hope .grid from script corresponds to something I add or I update script.
+                 Wait, I removed the old .grid CSS. I should add it back or update script.
+                 The script doesn't CREATE the container, it appends to id="books" which IS the container.
+                 I need to style id="books" as a grid.
+            -->
+        </div>
+      </div>
     </section>
 
     <!-- USER BORROW STATUS -->
-    <section id="userBorrows" class="card hidden">
-      <h3>Your Borrow Requests</h3>
-      <div id="userRequests" class="grid"></div>
+    <section id="userBorrows" class="card hidden mb-4">
+      <div class="card-header">
+        <h3 style="font-size:1.1rem; font-weight:600;">My Borrow Requests</h3>
+      </div>
+      <div id="userRequests" style="padding:1.5rem;"></div>
     </section>
 
   </main>
 </section>
 
 <script src="script.js"></script>
+<script>
+  feather.replace();
+  
+  // Quick fix for theme toggle text since I changed formatting
+  const themeBtn = document.getElementById('themeBtn');
+  const themeName = document.getElementById('themeName');
+  
+  themeBtn.addEventListener('click', () => {
+    // Rely on script.js for the body class toggle, but simple UI update here
+    setTimeout(() => {
+        const isDark = document.body.classList.contains('dark');
+        themeName.textContent = isDark ? 'Light Mode' : 'Dark Mode';
+        themeBtn.innerHTML = isDark ? '<i data-feather="sun"></i> <span id="themeName">Light Mode</span>' : '<i data-feather="moon"></i> <span id="themeName">Dark Mode</span>';
+        feather.replace();
+    }, 100);
+  });
+</script>
+
+<style>
+    /* Inline Grid Styles for Books to match Script logic */
+    #books, #userRequests, #requests {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1.5rem;
+    }
+    
+    /* Styles for dynamic elements created by script.js */
+    .book {
+        background: var(--bg-surface);
+        border: 1px solid var(--border);
+        border-radius: 0.75rem;
+        padding: 1.5rem;
+        transition: var(--transition);
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        position: relative;
+    }
+    
+    .book:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+        border-color: var(--primary-light);
+    }
+    
+    .book h4 { font-size: 1.1rem; font-weight: 600; color: var(--text-main); margin-bottom:0.25rem;}
+    .book p { color: var(--text-muted); font-size: 0.9rem; }
+    
+    .book button {
+        margin-top: 1rem;
+        width: 100%;
+        padding: 0.5rem;
+        background: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        font-weight: 500;
+    }
+    .book button:hover { opacity: 0.9; }
+    .book button.delete { background: var(--danger); margin-top:0.5rem;}
+    
+    /* Request Status Badges */
+    .status-badge {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        border-radius: 1rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+    .status-pending { background: var(--warning); color: #fff; }
+    .status-approved { background: var(--success); color: #fff; }
+    .status-rejected { background: var(--danger); color: #fff; }
+</style>
+
 </body>
 </html>

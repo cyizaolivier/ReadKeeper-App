@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ReadKeeper - My Library</title>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body>
+
+<div class="app-container">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="brand">
+          <i data-feather="book-open" style="color:var(--primary)"></i> ReadKeeper
+        </div>
+        
+        <nav class="nav-links">
+          <a href="index.html" class="nav-item">
+            <i data-feather="grid"></i> Dashboard
+          </a>
+          <a href="#" class="nav-item active">
+            <i data-feather="list"></i> My Books
+          </a>
+          <a href="#" class="nav-item">
+            <i data-feather="users"></i> Members
+          </a>
+          <a href="#" class="nav-item">
+            <i data-feather="settings"></i> Settings
+          </a>
+        </nav>
+    
+        <div class="user-profile">
+          <div class="avatar"><i data-feather="user"></i></div>
+          <div style="flex:1">
+              <div style="font-size:0.9rem; font-weight:600;" id="welcomeMsg">Welcome</div>
+              <div style="font-size:0.75rem; color:#94a3b8;">Active now</div>
+          </div>
+          <button id="logoutBtn" style="background:none; border:none; color:white; cursor:pointer;" title="Logout"><i data-feather="log-out"></i></button>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <!-- HEADER -->
+        <header class="flex-between mb-4">
+            <div>
+                <h1 style="font-size:1.5rem; font-weight:700;">My Collection</h1>
+                <p style="color:var(--text-muted)">Manage your personal library</p>
+            </div>
+            <button id="themeToggle" class="btn btn-secondary btn-sm">
+                <i data-feather="moon"></i> Toggle Theme
+            </button>
+        </header>
+
+        <!-- ADD SEARCH -->
+        <div class="card mb-4" style="padding:1.5rem;">
+            <div class="form-group" style="margin-bottom:0;">
+                <div style="position:relative;">
+                    <i data-feather="search" style="position:absolute; left:12px; top:12px; color:var(--text-muted); width:18px;"></i>
+                    <input type="text" id="searchInput" class="form-control" style="padding-left:2.5rem;" placeholder="Search by Title or Author">
+                </div>
+            </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns: 300px 1fr; gap: 1.5rem; align-items:start;">
+            
+            <!-- ADD BOOK FORM -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 style="font-size:1.1rem; font-weight:600;">Add / Update Book</h3>
+                </div>
+                <div style="padding:1.5rem;">
+                    <form id="bookForm" style="display:flex; flex-direction:column; gap:1rem;">
+                        <input type="hidden" id="bookIndex">
+                        
+                        <div class="form-group" style="margin:0">
+                            <label class="form-label">Title</label>
+                            <input type="text" id="title" class="form-control" placeholder="Book Title" required>
+                        </div>
+                        
+                        <div class="form-group" style="margin:0">
+                            <label class="form-label">Author</label>
+                            <input type="text" id="author" class="form-control" placeholder="Author Name" required>
+                        </div>
+                        
+                        <div class="form-group" style="margin:0">
+                            <label class="form-label">Genre</label>
+                            <input type="text" id="genre" class="form-control" placeholder="e.g. Fiction" required>
+                        </div>
+                        
+                        <div class="form-group" style="margin:0">
+                            <label class="form-label">Year</label>
+                            <input type="number" id="year" class="form-control" placeholder="2024" required>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary" style="width:100%; margin-top:0.5rem;">
+                            <i data-feather="save"></i> Save Book
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- BOOK LIST -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 style="font-size:1.1rem; font-weight:600;">Book List</h3>
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Author</th>
+                                <th>Genre</th>
+                                <th>Year</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bookTableBody">
+                            <!-- JS Injected here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+      </main>
+</div>
+
+<script src="library.js"></script>
+<script>
+    feather.replace();
+    // Styling fix for dynamically added actions buttons (library.js injects raw buttons)
+    // library.js injects: <button onclick="editBook(i)">Edit</button> <button onclick="deleteBook(i)">Delete</button> inside TD
+    // We can add global styles for td button or add a script to add classes. 
+    // Best to add global styles in style.css or internal style block.
+</script>
+<style>
+    /* Styling for buttons injected by library.js inside the table */
+    td button {
+        padding: 0.25rem 0.75rem;
+        border: 1px solid var(--border);
+        background: white;
+        border-radius: 0.375rem;
+        cursor: pointer;
+        font-size: 0.85rem;
+        margin-right: 0.5rem;
+        transition: var(--transition);
+        color: var(--text-main);
+    }
+    td button:hover {
+        background: var(--bg-body);
+        border-color: var(--text-muted);
+    }
+    td button:last-child {
+        margin-right: 0;
+        color: var(--danger);
+        border-color: var(--danger);
+    }
+    td button:last-child:hover {
+        background: var(--danger);
+        color: white;
+    }
+    /* Grid responsiveness for the split layout */
+    @media (max-width: 900px) {
+        div[style*="grid-template-columns"] {
+            grid-template-columns: 1fr !important;
+        }
+    }
+</style>
+</body>
+</html>
